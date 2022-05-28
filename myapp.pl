@@ -24,7 +24,7 @@ app->start;
 sub call_seff {  
   my ($job_id) = @_;   
 
-  my $output = capture("echo" , $job_id);
+  my $output = capture("seff " , $job_id);
   return $output;  
 } 
 
