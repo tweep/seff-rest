@@ -41,16 +41,16 @@ help: ## This help.
 # DOCKER TASKS 
 
 ## Build the container 
-## docker build -f docker/live/Dockerfile -t ehive-sentieon-jg:develop 
+## docker build -f docker/Dockerfile -t ehive-sentieon-jg:develop 
 
 build: ## Build the container with default version specified in mk_version_default.env. Build special version with make vr=mk_version.env build
-	docker build -t $(APP_NAME):$(VERSION) -f docker/live/Dockerfile .
+	docker build -t $(APP_NAME):$(VERSION) -f docker/Dockerfile .
 
 build-nc: ## Build default version of container without caching
-	docker build --no-cache -t $(APP_NAME):$(VERSION) -f docker/live/Dockerfile .
+	docker build --no-cache -t $(APP_NAME):$(VERSION) -f docker/Dockerfile .
 
 run: ## Run container default version 
-	docker run -i -t --rm --name="$(APP_NAME)" $(APP_NAME):$(VERSION) 
+	docker run -it -8080:8080 --rm --name="$(APP_NAME)" $(APP_NAME):$(VERSION) 
 
 
 #
@@ -59,7 +59,7 @@ run: ## Run container default version
 
 
 test-local: build  ## Run container with live-mounting of perl code + envrionment variables in dkr_env_vars.env and mount stuff in mk.conf/dkr_commandline_options.var
-	docker run -it --rm -p8080:8080 --name="$(APP_NAME)" --env-file=./mk.conf/dkr_environment_local.env $(APP_NAME):$(VERSION) /bin/bash
+	docker run -it --rm --name="$(APP_NAME)" --env-file=./mk.conf/dkr_environment_local.env $(DKR_CMD_LINE_OPTIONS_LOC) $(APP_NAME):$(VERSION) /bin/bash
 
 
 

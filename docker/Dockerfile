@@ -39,7 +39,7 @@ ENV PERL5LIB "/repo/lib/perl5"
 
 ENV PATH "/repo/bin":${PATH} 
 
-COPY $PWD /home/ubuntu/code/
+#COPY $PWD /home/ubuntu/code/
 ENV PERL5LIB "/home/ubuntu/code/lib:/repo/code/:${PERL5LIB}" 
 
 ENV TMPDIR   "/tmp/"   
