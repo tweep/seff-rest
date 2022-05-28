@@ -57,41 +57,12 @@ run: ## Run container default version
 # Setup test environments 
 #
 
-test-resio: build  ## Run container with live-mounting of perl code + envrionment variables in dkr_env_vars.env and mount stuff in mk.conf/dkr_commandline_options.var
-	docker run -i -t --rm --name="$(APP_NAME)" --env-file=./mk.conf/dkr_environment_resio.env $(DKR_CMD_LINE_OPTIONS_MAC)  $(APP_NAME):$(VERSION) /bin/bash
-
-test-aws: build  ## Run container with live-mounting of perl code + envrionment variables in dkr_env_vars.env and mount stuff in mk.conf/dkr_commandline_options.var
-	docker run -i -t --rm --name="$(APP_NAME)" --env-file=./mk.conf/dkr_environment_aws.env $(DKR_CMD_LINE_OPTIONS_AWS)  $(APP_NAME):$(VERSION) /bin/bash
 
 test-local: build  ## Run container with live-mounting of perl code + envrionment variables in dkr_env_vars.env and mount stuff in mk.conf/dkr_commandline_options.var
 	docker run -it --rm -p8080:8080 --name="$(APP_NAME)" --env-file=./mk.conf/dkr_environment_local.env $(APP_NAME):$(VERSION) /bin/bash
 
 
 
-#
-# Testing the pipeline 
-#
-
-init: ## Run initPipeline (requires that you run make test before )
-	init_pipeline.pl Bio::GNE::Hive::PipeConfig::FunctionalEquivalent::CE::AWS\
-    -hive_force_init 1  \
-    -pipeline_tmp_dir  /tmp/ephermal  \
-	-hive_db_name vogelj4_feb_test \
-    -username vogelj4 \
-    -ehive_pipeline_id 5046 \
-    -pipeline_manager_url http://10.158.141.229:8080/ehive/api/v1/analysis  
-
-seed: ## Run seedPipeline (requires that you run make test before) 
-	seed_pipeline.pl \
-         -url mysql://gneadmin:gne@$(EHIVE_MYSQL_HOST):$(EHIVE_MYSQL_PORT)/vogelj4_feb_test\
-         -logic_name ParseInputFile \
-	-input_id "{ 'json_file' => \"/home/ubuntu/code/input_bam_s3.json\"}" 
-
-runWorker: ## Run seedPipeline (requires that you run make test before) 
-	runWorker.pl \
-    -url mysql://gneadmin:gne@$(EHIVE_MYSQL_HOST):$(EHIVE_MYSQL_PORT)/vogelj4_feb_test
-
-rw: runWorker
 
 #
 # Docker tagging
