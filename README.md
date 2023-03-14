@@ -1,7 +1,8 @@
 
 # seff-rest
 Quick-and-dirty Mini REST service to query a SLURM daemon via REST to retrieve data on a SLURM job. 
-Rest service is executing the ```seff``` command. 
+Rest service is executing the ```seff``` command. Works on ```seff Version 2.1```. 
+Written in go.
 
 ## How to build 
 
