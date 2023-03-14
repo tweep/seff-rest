@@ -1,6 +1,7 @@
 
 # seff-rest
-Mini REST to get some job data from Slurm / seff 
+Quick-and-dirty Mini REST service to query a SLURM daemon via REST to retrieve data on a SLURM job. 
+Rest service is executing the ```seff``` command. 
 
 ## How to build 
 
